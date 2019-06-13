@@ -6,18 +6,23 @@ Vagrant.configure('2') do |config|
     c.vm.network 'private_network', ip: '10.240.0.10'
     c.vm.provision :shell, path: 'scripts/bootstrap/00-install-docker.sh'
     c.vm.provision :shell, path: 'scripts/bootstrap/01-install-k8s-tools.sh'
+    c.vm.provision :shell, path: 'scripts/bootstrap/02-setup-kubelet.sh'
+    c.vm.provision :shell, path: 'scripts/bootstrap/03-setup-k8s-master-node.sh'
+    c.vm.provision :shell, path: 'scripts/bootstrap/04-setup-calico.sh', privileged: false
 
     c.vm.provider 'virtualbox' do |v|
       v.memory = 2048
     end
   end
 
-  config.vm.define 'worker' do |c|
-    c.vm.hostname = 'worker'
+  config.vm.define 'worker-01' do |c|
+    c.vm.hostname = 'worker-01'
     c.vm.network 'private_network', ip: '10.240.0.20'
     c.vm.provision :shell, path: 'scripts/bootstrap/00-install-docker.sh'
     c.vm.provision :shell, path: 'scripts/bootstrap/01-install-k8s-tools.sh'
+    c.vm.provision :shell, path: 'scripts/bootstrap/02-setup-kubelet.sh'
     c.vm.provider 'virtualbox' do |v|
+      v.cpus = 1
       v.memory = 1024
     end
   end
