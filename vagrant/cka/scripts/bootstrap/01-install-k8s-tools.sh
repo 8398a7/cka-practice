@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-version='1.13.7-00'
+version='1.14.3-00'
 
 apt-get update && apt-get install -y apt-transport-https curl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
